@@ -36,7 +36,7 @@ $ virtualenv --system-site-packages <your_home_dir>/.virtualenvs/flame
 Activate virtual environment:
 ```
 $ cd flame-fitting
-$ source <your_home_dir>/flame/bin/activate
+$ source <your_home_dir>/.virtualenvs/flame/bin/activate
 ```
 
 Update the PYTHONPATH environment variable so that the system knows how to find the SMPL code. Add the following lines to your ~/.bash_profile file (create it if it doesn't exist; Linux users might have ~/.bashrc file instead), set the location to where you clone the project to.
