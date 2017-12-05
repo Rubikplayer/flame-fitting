@@ -18,7 +18,7 @@ def fit_lmk3d( lmk_3d,                      # input landmark 3d
                lmk_face_idx, lmk_b_coords,  # landmark embedding
                weights,                     # weights for the objectives
                shape_num=300, expr_num=100, opt_options=None ):
-    ''' function: fit FLAME model to 3d landmarks
+    """ function: fit FLAME model to 3d landmarks
 
     input: 
         lmk_3d: input landmark 3d, in shape (N,3)
@@ -33,7 +33,7 @@ def fit_lmk3d( lmk_3d,                      # input landmark 3d
         model.f: fitted result triangulations (fixed in this code)
         parms: fitted model parameters
 
-    '''
+    """
 
     # variables
     shape_idx      = np.arange( 0, min(300,shape_num) )        # valid shape component range in "betas": 0-299
@@ -117,8 +117,8 @@ def run_fitting():
     print "loaded 3d landmark from:", lmk_path
 
     # model
-    model_path = './models/model.pkl'
-    model = load_model( model_path )
+    model_path = './models/male_model.pkl' # change to 'female_model.pkl' or 'generic_model.pkl', if needed
+    model = load_model( model_path )       # the loaded model object is a 'chumpy' object, check https://github.com/mattloper/chumpy for details
     print "loaded model from:", model_path
 
     # landmark embedding

@@ -16,8 +16,8 @@ if __name__ == '__main__':
 
     # Load FLAME model (here we load the female model)
     # Make sure path is correct
-    model_path = './models/model_female.pkl'
-    model = load_model( model_path )
+    model_path = './models/female_model.pkl'
+    model = load_model( model_path )           # the loaded model object is a 'chumpy' object, check https://github.com/mattloper/chumpy for details
     print "loaded model from:", model_path
 
     # Show component number
