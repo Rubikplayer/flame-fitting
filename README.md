@@ -27,6 +27,8 @@ This codebase demonstrates how to
  * Load and evaluate FLAME model
  * Fit FLAME model to 3D landmarks
 
+This repository is based on [Chumpy](https://github.com/mattloper/chumpy). We also provide a [Tensorflow-based FLAME framework](https://github.com/TimoBolkart/TF_FLAME).  
+
 To request for FLAME model and registrations, please see the [project page](http://flame.is.tue.mpg.de)
 
 This repo is maintained by [Tianye Li](https://sites.google.com/site/tianyefocus/). The codes in `smpl_webuser` are directly from [SMPL Python code](http://smpl.is.tue.mpg.de/).
