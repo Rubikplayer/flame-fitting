@@ -1,6 +1,8 @@
 ## FLAME: Faces Learned with an Articulated Model and Expressions
 
-[FLAME](http://flame.is.tue.mpg.de/) is a lightweight and expressive generic head model learned from over 33,000 of accurately aligned 3D scans. 
+This is an official [FLAME](http://flame.is.tue.mpg.de/) repository. This repository is based on [Chumpy](https://github.com/mattloper/chumpy). We also provide a [Tensorflow-based FLAME framework](https://github.com/TimoBolkart/TF_FLAME).  
+
+FLAME is a lightweight and expressive generic head model learned from over 33,000 of accurately aligned 3D scans. 
 
 <p align="center"> 
 <img src="gifs/model_variations.gif">
@@ -26,8 +28,6 @@ and the [supplementary video](https://youtu.be/36rPTkhiJTM).
 This codebase demonstrates how to
  * Load and evaluate FLAME model
  * Fit FLAME model to 3D landmarks
-
-This repository is based on [Chumpy](https://github.com/mattloper/chumpy). We also provide a [Tensorflow-based FLAME framework](https://github.com/TimoBolkart/TF_FLAME).  
 
 To request for FLAME model and registrations, please see the [project page](http://flame.is.tue.mpg.de)
 
