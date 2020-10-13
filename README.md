@@ -114,5 +114,5 @@ When using this code in a scientific publication, please cite FLAME
 
 ### License
 
-The FLAME model is under a Creative Commons Attribution license. By using this code, you acknowledge that you have read the terms and conditions (http://flame.is.tue.mpg.de/model_license), understand them, and agree to be bound by them. If you do not agree with these terms and conditions, you must not use the code. You further agree to cite the FLAME paper when reporting results with this model.
+The FLAME model is under a Creative Commons Attribution license. By using this code, you acknowledge that you have read the terms and conditions (https://flame.is.tue.mpg.de/modellicense), understand them, and agree to be bound by them. If you do not agree with these terms and conditions, you must not use the code. You further agree to cite the FLAME paper when reporting results with this model.
 
