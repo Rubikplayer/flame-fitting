@@ -89,6 +89,7 @@ See `hello_world.py` and `facefit_lmk3d.py` for the demos.
 ### Supported projects
 
 FLAME supports several projects such as
+* [GIF: Generative Interpretable Faces](https://github.com/ParthaEth/GIF)
 * [VOCA: Voice Operated Character Animation](https://github.com/TimoBolkart/voca)
 * [RingNet: 3D Face Shape and Expression Reconstruction from an Image without 3D Supervision](https://github.com/soubhiksanyal/RingNet)
 * [Expressive Body Capture: 3D Hands, Face, and Body from a Single Image](https://github.com/vchoutas/smplify-x)
