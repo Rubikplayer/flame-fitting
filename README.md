@@ -86,18 +86,6 @@ $ deactivate
 
 See `hello_world.py` and `facefit_lmk3d.py` for the demos.
 
-### Supported projects
-
-FLAME supports several projects such as
-* [GIF: Generative Interpretable Faces](https://github.com/ParthaEth/GIF)
-* [VOCA: Voice Operated Character Animation](https://github.com/TimoBolkart/voca)
-* [RingNet: 3D Face Shape and Expression Reconstruction from an Image without 3D Supervision](https://github.com/soubhiksanyal/RingNet)
-* [Expressive Body Capture: 3D Hands, Face, and Body from a Single Image](https://github.com/vchoutas/smplify-x)
-
-FLAME is part of SMPL-X
-* [SMPL-X: A new joint 3D model of the human body, face and hands together](https://github.com/vchoutas/smplx)
-
-
 ### Citing
 
 When using this code in a scientific publication, please cite FLAME 
@@ -117,3 +105,13 @@ When using this code in a scientific publication, please cite FLAME
 
 The FLAME model is under a Creative Commons Attribution license. By using this code, you acknowledge that you have read the terms and conditions (https://flame.is.tue.mpg.de/modellicense), understand them, and agree to be bound by them. If you do not agree with these terms and conditions, you must not use the code. You further agree to cite the FLAME paper when reporting results with this model.
 
+### Supported projects
+
+FLAME supports several projects such as
+* [GIF: Generative Interpretable Faces](https://github.com/ParthaEth/GIF)
+* [VOCA: Voice Operated Character Animation](https://github.com/TimoBolkart/voca)
+* [RingNet: 3D Face Shape and Expression Reconstruction from an Image without 3D Supervision](https://github.com/soubhiksanyal/RingNet)
+* [Expressive Body Capture: 3D Hands, Face, and Body from a Single Image](https://github.com/vchoutas/smplify-x)
+
+FLAME is part of SMPL-X
+* [SMPL-X: A new joint 3D model of the human body, face and hands together](https://github.com/vchoutas/smplx)
