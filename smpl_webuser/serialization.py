@@ -23,12 +23,15 @@ Modules included:
 __all__ = ['load_model', 'save_model']
 
 import numpy as np
-import cPickle as pickle
 import chumpy as ch
+import pickle as pickle
 from chumpy.ch import MatVecMult
-from posemapper import posemap
-from verts import verts_core
-    
+# from posemapper import posemap
+# from verts import verts_core
+from smpl_webuser.posemapper import posemap
+from smpl_webuser.verts import verts_core
+
+
 def save_model(model, fname):
     m0 = model
     trainer_dict = {'v_template': np.asarray(m0.v_template),'J': np.asarray(m0.J),'weights': np.asarray(m0.weights),'kintree_table': m0.kintree_table,'f': m0.f, 'bs_type': m0.bs_type, 'posedirs': np.asarray(m0.posedirs)}    
@@ -75,12 +78,11 @@ def backwards_compatibility_replacements(dd):
 
 
 def ready_arguments(fname_or_dict):
-
     if not isinstance(fname_or_dict, dict):
-        dd = pickle.load(open(fname_or_dict))
+        dd = pickle.load(open(fname_or_dict, 'rb'), encoding="latin1")
     else:
         dd = fname_or_dict
-        
+
     backwards_compatibility_replacements(dd)
         
     want_shapemodel = 'shapedirs' in dd

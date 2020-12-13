@@ -20,9 +20,10 @@ Modules included:
 
 '''
 
-from posemapper import posemap
+# from posemapper import posemap
 import chumpy
 import numpy as np
+from smpl_webuser.posemapper import posemap
 
 def global_rigid_transformation(pose, J, kintree_table, xp):
     results = {}
@@ -31,7 +32,7 @@ def global_rigid_transformation(pose, J, kintree_table, xp):
     parent = {i : id_to_col[kintree_table[0,i]] for i in range(1, kintree_table.shape[1])}
 
     if xp == chumpy:
-        from posemapper import Rodrigues
+        from smpl_webuser.posemapper import Rodrigues
         rodrigues = lambda x : Rodrigues(x)
     else:
         import cv2

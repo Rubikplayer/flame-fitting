@@ -1,22 +1,14 @@
-## FLAME: Faces Learned with an Articulated Model and Expressions
+# FLAME: Articulated Expressive 3D Head Model
 
-This is an official [FLAME](http://flame.is.tue.mpg.de/) repository. This repository is based on [Chumpy](https://github.com/mattloper/chumpy). We also provide [Tensorflow FLAME](https://github.com/TimoBolkart/TF_FLAME) and [PyTorch FLAME](https://github.com/HavenFeng/photometric_optimization) frameworks.
+This is an official [FLAME](http://flame.is.tue.mpg.de/) repository. 
 
-FLAME is a lightweight and expressive generic head model learned from over 33,000 of accurately aligned 3D scans. 
+We also provide [Tensorflow FLAME](https://github.com/TimoBolkart/TF_FLAME) and [PyTorch FLAME](https://github.com/HavenFeng/photometric_optimization) frameworks, and code to [convert from Basel Face Model to FLAME](https://github.com/TimoBolkart/BFM_to_FLAME).
 
 <p align="center"> 
 <img src="gifs/model_variations.gif">
 </p>
 
-FLAME combines a linear identity shape space (trained from 3800 scans of human heads) with an articulated neck, jaw, and eyeballs, pose-dependent corrective blendshapes, and additional global expression blendshapes. 
-
-FLAME can e.g. be used to synthesize new motion sequences, by transferring the facial expression from a source actor to a target actor.
-
-<p align="center"> 
-<img src="gifs/motion_transfer.gif">
-</p>
-
-The animation shows the expression transfer between two subjects. For the target subject, only a static mesh is provided. For details please see the [scientific publication](https://ps.is.tuebingen.mpg.de/uploads_file/attachment/attachment/400/paper.pdf)
+FLAME is a lightweight and expressive generic head model learned from over 33,000 of accurately aligned 3D scans. FLAME combines a linear identity shape space (trained from head scans of 3800 subjects) with an articulated neck, jaw, and eyeballs, pose-dependent corrective blendshapes, and additional global expression blendshapes. For details please see the [scientific publication](https://ps.is.tuebingen.mpg.de/uploads_file/attachment/attachment/400/paper.pdf)
 
 ```
 Learning a model of facial shape and expression from 4D scans
@@ -25,66 +17,84 @@ ACM Transactions on Graphics (Proc. SIGGRAPH Asia) 2017
 ```
 and the [supplementary video](https://youtu.be/36rPTkhiJTM).
 
-This codebase demonstrates how to
- * Load and evaluate FLAME model
- * Fit FLAME model to 3D landmarks
+This codebase demonstrates
+ * **Sampling:** Load and evaluate FLAME model for random parameters
+ * **Landmark fitting:** Fit FLAME to 3D landmarks
+ * **Scan fitting:** Fit FLAME to a 3D scan
 
-To request for FLAME model and registrations, please see the [project page](http://flame.is.tue.mpg.de)
-
-This repo is maintained by [Tianye Li](https://sites.google.com/site/tianyefocus/). The codes in `smpl_webuser` are directly from [SMPL Python code](http://smpl.is.tue.mpg.de/).
-
-### Dependencies
-
-This code uses Python 2.7 and need the following dependencies:
-
-- [numpy & scipy](http://www.scipy.org/scipylib/download.html)
-- [opencv](http://opencv.org/)
-- [chumpy](https://github.com/mattloper/chumpy)
+<p align="center"> 
+<img src="gifs/fitting_scan.gif" width="50%">
+</p>
 
 ### Set-up
+
+The code has been tested with Python 3.6.9.
 
 Clone the git project:
 ```
 $ git clone https://github.com/Rubikplayer/flame-fitting.git
 ```
 
+Install pip and virtualenv
+
+```
+sudo apt-get install python3-pip python3-venv
+```
+
 Set up virtual environment:
 ```
 $ mkdir <your_home_dir>/.virtualenvs
-$ virtualenv --system-site-packages <your_home_dir>/.virtualenvs/flame
+$ python3 -m venv <your_home_dir>/.virtualenvs/flame-fitting
 ```
 
 Activate virtual environment:
 ```
 $ cd flame-fitting
-$ source <your_home_dir>/.virtualenvs/flame/bin/activate
+$ source <your_home_dir>/.virtualenvs/flame-fitting/bin/activate
 ```
 
-Update the PYTHONPATH environment variable so that the system knows how to find the SMPL code. Add the following lines to your ~/.bash_profile file (create it if it doesn't exist; Linux users might have ~/.bashrc file instead), set the location to where you clone the project to.
+Make sure your pip version is up-to-date:
 ```
-FLAME_LOCATION=<flame_project_dir>
-export PYTHONPATH=$PYTHONPATH:$FLAME_LOCATION
-```
-
-and run:
-```
-$ source ~/.bash_profile
+pip install -U pip
 ```
 
-To install numpy, scipy and chumpy:
+Somerequirements can be installed using:
 ```
-$ pip install numpy
-$ pip install scipy
-$ pip install chumpy
+pip install -r requirements.txt
 ```
-To deactivate the virtual environment:
+
+Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/mesh) within the virtual environment.
+
+The scan-to-mesh distance used for fitting a scan depends on Eigen. Either download Eigen for [here](http://eigen.tuxfamily.org/index.php?title=Main_Page) OR clone the repository:
 ```
-$ deactivate
+git clone https://gitlab.com/libeigen/eigen.git
 ```
+After downloading Eigen, you need to compile the code in the directory 'sbody/alignment/mesh_distance'. To do this go to the directory:
+```
+cd sbody/alignment/mesh_distance
+```
+Edit the file setup.py to set EIGEN_DIR to the location of Eigen. Then type:
+```
+make
+```
+
+### Data
+
+Download the FLAME model [MPI-IS/FLAME](https://flame.is.tue.mpg.de/downloads). You need to sign up and agree to the model license for access to the model.
 
 ### Demo
 
-See `hello_world.py` and `facefit_lmk3d.py` for the demos.
+ * Load and evaluate FLAME model: `hello_world.py`
+ * Fit FLAME to 3D landmarks: `fit_lmk3d.py`
+ * Fit FLAME to a 3D scan: `fit_scan.py`
+
+### Landmarks
+
+<p align="center"> 
+<img src="data/landmarks_51_annotated.png" width="50%">
+</p>
+
+The provided demos fit FLAME to 3D landmarks or to a scan, using 3D landmarks for initialization and during fitting. Both demos use the shown 51 landmarks. Providing the landmarks in the exact order is essential.
 
 ### Citing
 
@@ -106,6 +116,7 @@ When using this code in a scientific publication, please cite FLAME
 The FLAME model is under a Creative Commons Attribution license. By using this code, you acknowledge that you have read the terms and conditions (https://flame.is.tue.mpg.de/modellicense), understand them, and agree to be bound by them. If you do not agree with these terms and conditions, you must not use the code. You further agree to cite the FLAME paper when reporting results with this model.
 
 ### Supported projects
+
 FLAME supports several projects such as
 * [CoMA: Convolutional Mesh Autoencoders](https://github.com/anuragranj/coma)
 * [RingNet: 3D Face Shape and Expression Reconstruction from an Image without 3D Supervision](https://github.com/soubhiksanyal/RingNet)
@@ -116,3 +127,8 @@ FLAME supports several projects such as
 * [DECA: Detailed Expression Capture and Animation](https://github.com/YadiraF/DECA)
 
 FLAME is part of [SMPL-X: : A new joint 3D model of the human body, face and hands together](https://github.com/vchoutas/smplx)
+
+
+### Acknowledgement
+
+Code in `smpl_webuser` originates from [SMPL Python code](http://smpl.is.tue.mpg.de/), and code in `sbody` originates from [SMALR](https://github.com/silviazuffi/smalr_online). We thank the authors for pushing these code packages. 
