@@ -23,7 +23,7 @@ This codebase demonstrates
  * **Scan fitting:** Fit FLAME to a 3D scan
 
 <p align="center"> 
-<img src="gifs/fitting_scan.gif" width="60%">
+<img src="gifs/fitting_scan.gif" width="80%">
 </p>
 
 ### Set-up
