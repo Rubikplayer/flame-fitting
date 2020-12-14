@@ -32,7 +32,7 @@ The code has been tested with Python 3.6.9.
 
 Clone the git project:
 ```
-$ git clone https://github.com/Rubikplayer/flame-fitting.git
+git clone https://github.com/Rubikplayer/flame-fitting.git
 ```
 
 Install pip and virtualenv
@@ -43,14 +43,14 @@ sudo apt-get install python3-pip python3-venv
 
 Set up virtual environment:
 ```
-$ mkdir <your_home_dir>/.virtualenvs
-$ python3 -m venv <your_home_dir>/.virtualenvs/flame-fitting
+mkdir <your_home_dir>/.virtualenvs
+python3 -m venv <your_home_dir>/.virtualenvs/flame-fitting
 ```
 
 Activate virtual environment:
 ```
-$ cd flame-fitting
-$ source <your_home_dir>/.virtualenvs/flame-fitting/bin/activate
+cd flame-fitting
+source <your_home_dir>/.virtualenvs/flame-fitting/bin/activate
 ```
 
 Make sure your pip version is up-to-date:
