@@ -44,12 +44,13 @@ def fit_lmk3d( lmk_3d,                      # input landmark 3d
     """
 
     # variables
+    pose_idx       = np.union1d(np.arange(3), np.arange(6,9)) # global rotation and jaw rotation
     shape_idx      = np.arange( 0, min(300,shape_num) )        # valid shape component range in "betas": 0-299
     expr_idx       = np.arange( 300, 300+min(100,expr_num) )   # valid expression component range in "betas": 300-399
     used_idx       = np.union1d( shape_idx, expr_idx )
     model.betas[:] = np.random.rand( model.betas.size ) * 0.0  # initialized to zero
     model.pose[:]  = np.random.rand( model.pose.size ) * 0.0   # initialized to zero
-    free_variables = [ model.trans, model.pose, model.betas[used_idx] ] 
+    free_variables = [ model.trans, model.pose[pose_idx], model.betas[used_idx] ] 
     
     # weights
     print("fit_lmk3d(): use the following weights:")
@@ -79,7 +80,7 @@ def fit_lmk3d( lmk_3d,                      # input landmark 3d
         opt_options['disp']    = 1
         opt_options['delta_0'] = 0.1
         opt_options['e_3']     = 1e-4
-        opt_options['maxiter'] = 100
+        opt_options['maxiter'] = 2000
         sparse_solver = lambda A, x: sp.linalg.cg(A, x, maxiter=opt_options['maxiter'])[0]
         opt_options['sparse_solver'] = sparse_solver
 
@@ -121,7 +122,7 @@ def run_fitting():
     # input landmarks
     lmk_path = './data/scan_lmks.npy'
     # measurement unit of landmarks ['m', 'cm', 'mm']
-    unit = 'mm' 
+    unit = 'm' 
 
     scale_factor = get_unit_factor('m') / get_unit_factor(unit)
     lmk_3d = scale_factor*np.load(lmk_path)
@@ -146,19 +147,23 @@ def run_fitting():
     # landmark term
     weights['lmk']   = 1.0   
     # shape regularizer (weight higher to regularize face shape more towards the mean)
-    weights['shape'] = 0.001
+    weights['shape'] = 1e-3
     # expression regularizer (weight higher to regularize facial expression more towards the mean)
-    weights['expr']  = 0.001
+    weights['expr']  = 1e-3
     # regularization of head rotation around the neck and jaw opening (weight higher for more regularization)
-    weights['pose']  = 0.1
+    weights['pose']  = 1e-2
     
+    # number of shape and expression parameters (we do not recommend using too many parameters for fitting to sparse keypoints)
+    shape_num = 100
+    expr_num = 50
+
     # optimization options
     import scipy.sparse as sp
     opt_options = {}
     opt_options['disp']    = 1
     opt_options['delta_0'] = 0.1
     opt_options['e_3']     = 1e-4
-    opt_options['maxiter'] = 100
+    opt_options['maxiter'] = 2000
     sparse_solver = lambda A, x: sp.linalg.cg(A, x, maxiter=opt_options['maxiter'])[0]
     opt_options['sparse_solver'] = sparse_solver
 
@@ -167,7 +172,7 @@ def run_fitting():
                                        model=model,                                           # model
                                        lmk_face_idx=lmk_face_idx, lmk_b_coords=lmk_b_coords,  # landmark embedding
                                        weights=weights,                                       # weights for the objectives
-                                       shape_num=300, expr_num=100, opt_options=opt_options ) # options
+                                       shape_num=shape_num, expr_num=expr_num, opt_options=opt_options ) # options
 
     # write result
     output_path = join( output_dir, 'fit_lmk3d_result.obj' )
