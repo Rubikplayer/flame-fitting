@@ -88,7 +88,7 @@ Download the FLAME model [MPI-IS/FLAME](https://flame.is.tue.mpg.de/downloads). 
  * Fit FLAME to 3D landmarks: `fit_lmk3d.py`
  * Fit FLAME to a 3D scan: `fit_scan.py`
 
-Fitting a scan requires scan and FLAME model to be in the same local coordiante systems. The `fit_scan.py` script provides different option to convert from Meters [m] (default), Centimeters [cm], or Milimieters [mm]. Please specify the right unit when running the script. If the unit of the measurement unit is unknown or not supported, choose `scale_unit = 'NA'`.
+Fitting a scan requires scan and FLAME model to be in the same local coordiante systems. The `fit_scan.py` script provides different options by specifying the variable `scale_unit` to convert from Meters [m] (default), Centimeters [cm], or Milimieters [mm]. Please specify the right unit when running `fit_scan.py`. If the unit of the measurement unit is unknown, choose `scale_unit = 'NA'`.
 
 ### Landmarks
 
