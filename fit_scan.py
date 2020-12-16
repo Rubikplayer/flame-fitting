@@ -19,8 +19,54 @@ from smpl_webuser.serialization import load_model
 from sbody.mesh_distance import ScanToMesh
 from sbody.robustifiers import GMOf
 from sbody.alignment.objectives import sample_from_mesh
-from fitting.landmarks import load_embedding, landmark_error_3d
+from fitting.landmarks import load_embedding, landmark_error_3d, mesh_points_by_barycentric_coordinates
 from fitting.util import load_binary_pickle, write_simple_obj, safe_mkdir, get_unit_factor
+
+# -----------------------------------------------------------------------------
+
+def compute_approx_scale(lmk_3d, model, lmk_face_idx, lmk_b_coords, opt_options=None):
+    """ function: compute approximate scale to align scan and model
+
+    input: 
+        lmk_3d: input landmark 3d, in shape (N,3)
+        model: FLAME face model
+        lmk_face_idx, lmk_b_coords: landmark embedding, in face indices and barycentric coordinates
+        opt_options: optimizaton options
+
+    output:
+        model.r: fitted result vertices
+        model.f: fitted result triangulations (fixed in this code)
+        parms: fitted model parameters
+
+    """
+
+    scale = ch.ones(1)
+    scan_lmks = scale*ch.array(lmk_3d)
+    model_lmks = mesh_points_by_barycentric_coordinates( model, model.f, lmk_face_idx, lmk_b_coords )
+    lmk_err = scan_lmks-model_lmks
+
+    # options
+    if opt_options is None:
+        print("fit_lmk3d(): no 'opt_options' provided, use default settings.")
+        import scipy.sparse as sp
+        opt_options = {}
+        opt_options['disp']    = 1
+        opt_options['delta_0'] = 0.1
+        opt_options['e_3']     = 1e-4
+        opt_options['maxiter'] = 2000
+        sparse_solver = lambda A, x: sp.linalg.cg(A, x, maxiter=opt_options['maxiter'])[0]
+        opt_options['sparse_solver'] = sparse_solver
+
+    # on_step callback
+    def on_step(_):
+        pass
+
+    ch.minimize( fun      = lmk_err,
+                 x0       = [ scale, model.trans, model.pose[:3] ],
+                 method   = 'dogleg',
+                 callback = on_step,
+                 options  = opt_options )
+    return scale.r
 
 # -----------------------------------------------------------------------------
 
@@ -126,17 +172,18 @@ def fit_scan(  scan,                        # input scan
 def run_fitting():
     # input scan
     scan_path = './data/scan.obj'
+
     # landmarks of the scan
     scan_lmk_path = './data/scan_lmks.npy'
-    # measurement unit of landmarks ['m', 'cm', 'mm']
+
+    # measurement unit of landmarks ['m', 'cm', 'mm', 'NA'] 
+    # When using option 'NA', the scale of the scan will be estimated by rigidly aligning model and scan landmarks
     scan_unit = 'm' 
 
-    scale_factor = get_unit_factor('m') / get_unit_factor(scan_unit)
     scan = Mesh(filename=scan_path)
-    scan.v[:] *= scale_factor
     print("loaded scan from:", scan_path)
 
-    lmk_3d = scale_factor*np.load(scan_lmk_path)
+    lmk_3d = np.load(scan_lmk_path)
     print("loaded scan landmark from:", scan_lmk_path)
 
     # model
@@ -148,6 +195,18 @@ def run_fitting():
     lmk_emb_path = './models/flame_static_embedding.pkl' 
     lmk_face_idx, lmk_b_coords = load_embedding(lmk_emb_path)
     print("loaded lmk embedding")
+
+    # scale scans and scan landmarks to be in the same local coordinate systems as the FLAME model
+    if scan_unit.lower() == 'na':
+        print('No scale specifiec - compute approximate scale based on the landmarks')
+        scale_factor = compute_approx_scale(lmk_3d, model, lmk_face_idx, lmk_b_coords)
+        print('Scale factor: %f' % scale_factor)
+    else:
+        scale_factor = get_unit_factor('m') / get_unit_factor(scan_unit)
+        print('Scale factor: %f' % scale_factor)        
+
+    scan.v[:] *= scale_factor
+    lmk_3d[:] *= scale_factor
 
     # output
     output_dir = './output'
@@ -190,8 +249,11 @@ def run_fitting():
     # write result
     output_path = join( output_dir, 'fit_scan_result.obj' )
     write_simple_obj( mesh_v=mesh_v, mesh_f=mesh_f, filepath=output_path, verbose=False )
-
     print('output mesh saved to: ', output_path) 
+
+    # output scaled scan for reference (output scan fit and the scan should be spatially aligned)
+    output_path = join( output_dir, 'scan_scaled.obj' )    
+    write_simple_obj( mesh_v=scan.v, mesh_f=scan.f, filepath=output_path, verbose=False )
 
 # -----------------------------------------------------------------------------
 
