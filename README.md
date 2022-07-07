@@ -65,7 +65,7 @@ pip install -r requirements.txt
 
 Install mesh processing libraries from [MPI-IS/mesh](https://github.com/MPI-IS/mesh) within the virtual environment.
 
-The scan-to-mesh distance used for fitting a scan depends on Eigen. Either download Eigen for [here](http://eigen.tuxfamily.org/index.php?title=Main_Page) OR clone the repository:
+The scan-to-mesh distance used for fitting a scan depends on Eigen. Either download Eigen from [here](http://eigen.tuxfamily.org/index.php?title=Main_Page) OR clone the repository:
 ```
 git clone https://gitlab.com/libeigen/eigen.git
 ```
