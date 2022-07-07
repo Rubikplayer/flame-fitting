@@ -12,4 +12,4 @@ mkdir -p ./models
 
 echo -e "\nDownloading FLAME..."
 wget --post-data "username=$username&password=$password" 'https://download.is.tue.mpg.de/download.php?domain=flame&sfile=FLAME2020.zip&resume=1' -O './models/FLAME2020.zip' --no-check-certificate --continue
-unzip ./models/FLAME2020.zip -d ./data
+unzip ./models/FLAME2020.zip -d ./models
