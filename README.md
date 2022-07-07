@@ -80,7 +80,10 @@ make
 
 ### Data
 
-Download the FLAME model [MPI-IS/FLAME](https://flame.is.tue.mpg.de/downloads). You need to sign up and agree to the model license for access to the model.
+To download the FLAME model, sign up and agree to the model license under [MPI-IS/FLAME](https://flame.is.tue.mpg.de/downloads). Then run following script: 
+```
+./fetch_FLAME.sh
+```
 
 ### Demo
 
