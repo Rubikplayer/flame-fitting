@@ -58,7 +58,7 @@ Make sure your pip version is up-to-date:
 pip install -U pip
 ```
 
-Somerequirements can be installed using:
+Some requirements can be installed using:
 ```
 pip install -r requirements.txt
 ```
