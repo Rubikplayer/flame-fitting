@@ -122,6 +122,8 @@ The FLAME model is under a Creative Commons Attribution license. By using this c
 
 ### Supported projects
 
+Visit the [FLAME-Universe](https://github.com/TimoBolkart/FLAME-Universe) for an overview of FLAME-based projects. 
+
 FLAME supports several projects such as
 * [CoMA: Convolutional Mesh Autoencoders](https://github.com/anuragranj/coma)
 * [RingNet: 3D Face Shape and Expression Reconstruction from an Image without 3D Supervision](https://github.com/soubhiksanyal/RingNet)
@@ -131,8 +133,7 @@ FLAME supports several projects such as
 * [GIF: Generative Interpretable Faces](https://github.com/ParthaEth/GIF)
 * [DECA: Detailed Expression Capture and Animation](https://github.com/YadiraF/DECA)
 
-FLAME is part of [SMPL-X: : A new joint 3D model of the human body, face and hands together](https://github.com/vchoutas/smplx)
-
+FLAME is part of [SMPL-X: : A new joint 3D model of the human body, face and hands together](https://github.com/vchoutas/smplx).
 
 ### Acknowledgement
 
